@@ -1,6 +1,10 @@
 ### Secret keys
 config.properties
 
+### Files
+target
+flights.db
+.idea/
 
 ### IntelliJ IDEA ###
 out/
