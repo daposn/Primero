@@ -6,9 +6,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
-public class FlightClient {
+public class FlightClient implements FlightFeeder {
     private final String apiKey;
     private final OkHttpClient client = new OkHttpClient();
 
@@ -27,7 +28,12 @@ public class FlightClient {
         }
     }
 
-    public JsonArray captureFlights() {
+    @Override
+    public List<Flight> fetch(String from, String to, String date) {
+        return new FlightNormalization().normalize(captureFlights(from, to, date));
+    }
+
+    private JsonArray captureFlights() {
         if (apiKey == null) return null;
 
         String url = "https://serpapi.com/search.json"
@@ -55,7 +61,7 @@ public class FlightClient {
         }
     }
 
-    public JsonArray captureFlights(String departure_id, String arrival_id, String date){
+    private JsonArray captureFlights(String departure_id, String arrival_id, String date){
         if (apiKey == null) return null;
 
         String url = "https://serpapi.com/search.json"

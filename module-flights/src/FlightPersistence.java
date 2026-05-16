@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class FlightPersistence{
+public class FlightPersistence implements FlightSerializer {
     private static final String URL = "jdbc:sqlite:flights.db";
     FlightPersistence(){
         createIfNotExists();
