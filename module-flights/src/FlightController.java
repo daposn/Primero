@@ -1,10 +1,10 @@
 import java.util.List;
 
-public class Controller {
+public class FlightController {
     private final FlightFeeder feeder;
     private final FlightSerializer serializer;
 
-    public Controller(FlightFeeder feeder, FlightSerializer serializer) {
+    public FlightController(FlightFeeder feeder, FlightSerializer serializer) {
         this.feeder = feeder;
         this.serializer = serializer;
     }

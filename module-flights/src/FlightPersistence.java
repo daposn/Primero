@@ -20,10 +20,10 @@ public class FlightPersistence implements FlightSerializer {
                 "layoverAirports TEXT, " +
                 "arrival TEXT, " +
                 "price REAL, " +
-                "capturedAt TEXT, " +
                 "hasLayovers BOOLEAN, " +
                 "stops INTEGER, " +
-                "duration REAL);";
+                "duration REAL" +
+                "ts TEXT);";
         try(Connection c = DriverManager.getConnection(URL);
             PreparedStatement ps = c.prepareStatement(query);){
 
@@ -33,8 +33,9 @@ public class FlightPersistence implements FlightSerializer {
         }
     }
 
+    // saving to a DB
     public void saveAll(List<Flight> flights){
-        String query = "INSERT into flights (code, airlines, departure, layoverAirports, arrival, price, capturedAt, hasLayovers, stops, duration) " +
+        String query = "INSERT into flights (code, airlines, departure, layoverAirports, arrival, price, hasLayovers, stops, duration, ts) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try(Connection c = DriverManager.getConnection(URL);
@@ -47,10 +48,10 @@ public class FlightPersistence implements FlightSerializer {
                 ps.setString(4, String.join(",", flight.layover_airports));
                 ps.setString(5, flight.to);
                 ps.setDouble(6, flight.price);
-                ps.setString(7, flight.capturedAt);
-                ps.setBoolean(8, flight.has_layovers);
-                ps.setInt(9, flight.stops);
-                ps.setDouble(10, flight.duration);
+                ps.setBoolean(7, flight.has_layovers);
+                ps.setInt(8, flight.stops);
+                ps.setDouble(9, flight.duration);
+                ps.setString(10, flight.ts);
                 ps.addBatch();
             }
 

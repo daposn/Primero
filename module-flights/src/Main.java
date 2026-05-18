@@ -5,8 +5,8 @@ public class Main {
         String tomorrow = LocalDate.now().plusDays(1).toString();
 
         FlightFeeder feeder = new FlightClient();
-        FlightSerializer serializer = new FlightPersistence();
-        Controller controller = new Controller(feeder, serializer);
+        FlightSerializer serializer = new FlightPublisher();
+        FlightController controller = new FlightController(feeder, serializer);
 
         controller.run("CDG", "AUS", tomorrow);
     }

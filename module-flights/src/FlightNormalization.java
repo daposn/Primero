@@ -2,16 +2,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class FlightNormalization {
 
     public FlightNormalization() {}
 
-    public List<Flight> normalize(JsonArray raw_best_flights) {
+    public List<Flight> normalize(JsonArray raw_best_flights, String date) {
         List<Flight> clean_flights = new ArrayList<>();
 
         if (raw_best_flights == null) {
@@ -19,6 +17,7 @@ public class FlightNormalization {
             return clean_flights;
         }
 
+        String ts = Instant.now().toString(); // timestamp captured just once for all the flights in one API call
         for (var element : raw_best_flights) {
             JsonObject trip = element.getAsJsonObject();
 
@@ -36,8 +35,6 @@ public class FlightNormalization {
             boolean has_layovers = !layovers.isEmpty();
             int stops            = layovers.size();
 
-            String capturedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yy HH:mm:ss"));
-
             List<String> code             = new ArrayList<>();
             List<String> airlines         = new ArrayList<>();
             List<String> layover_airports = new ArrayList<>();
@@ -53,7 +50,7 @@ public class FlightNormalization {
             }
 
             clean_flights.add(new Flight(code, airlines, dep_airport, layover_airports,
-                    arr_airport, price, capturedAt, has_layovers, stops, duration));
+                    arr_airport, price, has_layovers, stops, duration, date, ts));
         }
         return clean_flights;
     }

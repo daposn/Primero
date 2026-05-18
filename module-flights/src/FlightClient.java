@@ -30,35 +30,7 @@ public class FlightClient implements FlightFeeder {
 
     @Override
     public List<Flight> fetch(String from, String to, String date) {
-        return new FlightNormalization().normalize(captureFlights(from, to, date));
-    }
-
-    private JsonArray captureFlights() {
-        if (apiKey == null) return null;
-
-        String url = "https://serpapi.com/search.json"
-                + "?engine=google_flights"
-                + "&departure_id=CDG"
-                + "&arrival_id=AUS"
-                + "&currency=USD"
-                + "&type=2"
-                + "&outbound_date=2026-04-22"
-                + "&api_key=" + apiKey;
-
-        Request request = new Request.Builder().url(url).build();
-
-        try (Response response = client.newCall(request).execute()) {
-            String body = response.body().string();
-            JsonObject results = JsonParser.parseString(body).getAsJsonObject();
-            JsonArray best = results.getAsJsonArray("best_flights");
-            if (best == null) {
-                System.err.println("SerpAPI response has no 'best_flights'. Response: " + body);
-            }
-            return best;
-        } catch (IOException e) {
-            System.err.println("Error calling SerpAPI: " + e.getMessage());
-            return null;
-        }
+        return new FlightNormalization().normalize(captureFlights(from, to, date), date);
     }
 
     private JsonArray captureFlights(String departure_id, String arrival_id, String date){
@@ -78,7 +50,11 @@ public class FlightClient implements FlightFeeder {
         try (Response response = client.newCall(request).execute()) {
             String body = response.body().string();
             JsonObject results = JsonParser.parseString(body).getAsJsonObject();
-            return results.getAsJsonArray("best_flights");
+            JsonArray best = results.getAsJsonArray("best_flights");
+            if (best == null) {
+                System.err.println("SerpAPI response has no 'best_flights'. Response: " + body);
+            }
+            return best;
         } catch (IOException e) {
             System.err.println("Error calling SerpAPI: " + e.getMessage());
             return null;
