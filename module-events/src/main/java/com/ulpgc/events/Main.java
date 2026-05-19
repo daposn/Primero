@@ -2,42 +2,47 @@ package com.ulpgc.events;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    private static final String[] COUNTRIES = {"ES", "IT", "FR"};
-    private static final int EVENTS_PER_COUNTRY = 50;
+    private static final String[] COUNTRIES        = {"ES", "IT", "FR"};
+    private static final int      EVENTS_PER_COUNTRY = 50;
 
     public static void main(String[] args) {
+        ScheduledExecutorService scheduler =
+                Executors.newSingleThreadScheduledExecutor();
 
-        TicketmasterClient client   = new TicketmasterClient();
-        EventParser        parser   = new EventParser();
-        EventFilter        filter   = new EventFilter();
-        XmlExporter        exporter = new XmlExporter();
+        scheduler.scheduleAtFixedRate(
+                Main::ejecutarCaptura,
+                0,
+                1,
+                TimeUnit.HOURS
+        );
+    }
+
+    private static void ejecutarCaptura() {
+        System.out.println("Event feeder: captura iniciada " + java.time.Instant.now());
+
+        TicketmasterClient client    = new TicketmasterClient();
+        EventParser        parser    = new EventParser();
+        EventFilter        filter    = new EventFilter();
+        EventPublisher     publisher = new EventPublisher();
 
         List<Event> todosLosEventos = new ArrayList<>();
 
         for (String countryCode : COUNTRIES) {
-            System.out.println("Descargando eventos de: " + countryCode + "...");
-
             String json = client.getEvents(countryCode, EVENTS_PER_COUNTRY);
-
-            if (json == null) {
-                System.err.println("  -> Error al obtener datos de " + countryCode);
-                continue;
-            }
-
-            List<Event> eventosPais = parser.parse(json);
-            System.out.println("  -> " + eventosPais.size() + " eventos encontrados.");
-
-            todosLosEventos.addAll(eventosPais);
+            if (json == null) continue;
+            todosLosEventos.addAll(parser.parse(json));
         }
 
-        List<Event> eventosFiltrados = filter.filtrarCompletos(todosLosEventos);
+        List<Event> filtrados = filter.filtrarCompletos(todosLosEventos);
+        publisher.saveAll(filtrados);
+        publisher.closeAll();
 
-        EventPublisher publisher = new EventPublisher();
-        publisher.publish(eventosFiltrados);
-
-        exporter.exportar(eventosFiltrados, "events.xml");
+        System.out.println("Event feeder: " + filtrados.size() + " eventos publicados.");
     }
 }

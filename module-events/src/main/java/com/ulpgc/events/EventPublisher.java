@@ -17,25 +17,32 @@ public class EventPublisher {
 
     private void connect() {
         try {
-            ConnectionFactory factory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+            ConnectionFactory factory =
+                    new ActiveMQConnectionFactory("tcp://localhost:61616");
             connection = factory.createConnection();
             connection.start();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Topic topic = session.createTopic("Event");
+            Topic topic = session.createTopic("Event"); // topic: "Event"
             producer = session.createProducer(topic);
         } catch (Exception e) {
-            System.err.println("Couldn't connect to ActiveMQ");
+            System.err.println("EventPublisher: couldn't connect to ActiveMQ");
         }
     }
 
-    public void publish(List<Event> events) {
+    public void saveAll(List<Event> events) {
         try {
             for (Event event : events) {
                 String text = new Gson().toJson(event);
                 TextMessage msg = session.createTextMessage(text);
                 producer.send(msg);
             }
+        } catch (JMSException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public void closeAll() {
+        try {
             producer.close();
             session.close();
             connection.close();
