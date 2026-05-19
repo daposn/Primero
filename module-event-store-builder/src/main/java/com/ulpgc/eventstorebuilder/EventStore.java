@@ -1,3 +1,5 @@
+package com.ulpgc.eventstorebuilder;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -10,8 +12,8 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-public class EventStore{
-    EventStore(){
+public class EventStore {
+    public EventStore(){
 
     }
 
@@ -26,12 +28,10 @@ public class EventStore{
         String directory = String.format("eventstore/%s/%s", topic, ss);
 
         try {
-            // create the directory
             Path dir = Path.of(directory);
             System.out.println(dir.toAbsolutePath());
             Files.createDirectories(dir);
 
-            // write to the file
             Path file = dir.resolve(formattedDate + ".events");
             Files.writeString(file, json + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } catch (IOException e) {

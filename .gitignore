@@ -5,6 +5,12 @@ config.properties
 target
 flights.db
 .idea/
+eventstore/
+Proyecto_Sprint_1.pdf
+Proyecto_Sprint_2.pdf
+Proyecto_Sprint_3.pdf
+S2. Clean Code.pdf
+S3. Refactoring.pdf
 
 ### IntelliJ IDEA ###
 out/

@@ -1,3 +1,5 @@
+package com.ulpgc.flights;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

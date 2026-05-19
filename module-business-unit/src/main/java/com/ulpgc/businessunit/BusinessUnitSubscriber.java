@@ -1,9 +1,11 @@
+package com.ulpgc.businessunit;
+
 import com.google.gson.Gson;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import javax.jms.*;
 import java.util.function.Consumer;
 
-public class BusinessUnitSubscriber <T> {
+public class BusinessUnitSubscriber<T> {
     Class<T> type;
     Consumer<T> handler;
 

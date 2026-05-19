@@ -1,3 +1,5 @@
+package com.ulpgc.flights;
+
 import java.time.LocalDate;
 
 public class Main {

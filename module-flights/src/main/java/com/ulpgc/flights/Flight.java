@@ -1,20 +1,22 @@
+package com.ulpgc.flights;
+
 import java.util.List;
 
 public class Flight {
-    List<String> code;
-    List<String> airlines;
-    String from;
-    List<String> layover_airports;
-    String to;
-    double price;
-    boolean has_layovers;
-    int stops;
-    double duration;
-    String arrival_date;
-    String ts;
-    String ss;
+    public List<String> code;
+    public List<String> airlines;
+    public String from;
+    public List<String> layover_airports;
+    public String to;
+    public double price;
+    public boolean has_layovers;
+    public int stops;
+    public double duration;
+    public String arrival_date;
+    public String ts;
+    public String ss;
 
-    Flight(List<String> code, List<String> airlines, String from, List<String> layover_airports,
+    public Flight(List<String> code, List<String> airlines, String from, List<String> layover_airports,
            String to, double price, boolean has_layovers, int stops, double duration, String arrival_date, String ts) {
         this.code = code;
         this.airlines = airlines;
@@ -29,4 +31,6 @@ public class Flight {
         this.ts = ts;
         this.ss = "flight-feeder";
     }
+
+    public Flight() {}
 }

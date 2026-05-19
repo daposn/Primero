@@ -1,3 +1,5 @@
+package com.ulpgc.flights;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -5,6 +7,7 @@ import com.google.gson.JsonObject;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+
 public class FlightNormalization {
 
     public FlightNormalization() {}
@@ -17,7 +20,7 @@ public class FlightNormalization {
             return clean_flights;
         }
 
-        String ts = Instant.now().toString(); // timestamp captured just once for all the flights in one API call
+        String ts = Instant.now().toString();
         for (var element : raw_best_flights) {
             JsonObject trip = element.getAsJsonObject();
 

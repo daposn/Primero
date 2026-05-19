@@ -1,3 +1,5 @@
+package com.ulpgc.flights;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -6,7 +8,8 @@ import java.util.List;
 
 public class FlightPersistence implements FlightSerializer {
     private static final String URL = "jdbc:sqlite:flights.db";
-    FlightPersistence(){
+
+    public FlightPersistence(){
         createIfNotExists();
     }
 
@@ -33,7 +36,6 @@ public class FlightPersistence implements FlightSerializer {
         }
     }
 
-    // saving to a DB
     public void saveAll(List<Flight> flights){
         String query = "INSERT into flights (code, airlines, departure, layoverAirports, arrival, price, hasLayovers, stops, duration, ts) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

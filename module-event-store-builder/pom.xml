@@ -12,10 +12,6 @@
 
     <artifactId>module-event-store-builder</artifactId>
 
-    <build>
-        <sourceDirectory>src</sourceDirectory>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.activemq</groupId>

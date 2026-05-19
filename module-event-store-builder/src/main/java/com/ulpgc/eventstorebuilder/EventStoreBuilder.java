@@ -1,3 +1,5 @@
+package com.ulpgc.eventstorebuilder;
+
 import org.apache.activemq.ActiveMQConnectionFactory;
 import javax.jms.*;
 
@@ -8,7 +10,7 @@ public class EventStoreBuilder {
     TopicSubscriber subscriber;
     EventStore eventStore;
 
-    EventStoreBuilder(String topic){
+    public EventStoreBuilder(String topic){
         this.topicName = topic;
         eventStore = new EventStore();
         connect();

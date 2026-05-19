@@ -1,3 +1,5 @@
+package com.ulpgc.flights;
+
 import java.util.List;
 
 public interface FlightSerializer {
