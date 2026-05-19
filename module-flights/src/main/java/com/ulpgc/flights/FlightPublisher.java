@@ -38,10 +38,16 @@ public class FlightPublisher implements FlightSerializer {
                 producer.send(msg);
             }
 
+        } catch (JMSException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void closeAll(){
+        try {
             producer.close();
             session.close();
             connection.close();
-
         } catch (JMSException e) {
             throw new RuntimeException(e);
         }
