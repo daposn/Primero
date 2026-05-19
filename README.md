@@ -1,2 +1,0 @@
-# Primero
-DACD project 
