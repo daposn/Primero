@@ -13,6 +13,7 @@
         <module>module-flights</module>
         <module>module-events</module>
         <module>module-event-store-builder</module>
+        <module>module-business-unit</module>
     </modules>
 
     <properties>
