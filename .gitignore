@@ -6,6 +6,9 @@ target
 flights.db
 .idea/
 eventstore/
+module-events/events.xml
+
+
 Proyecto_Sprint_1.pdf
 Proyecto_Sprint_2.pdf
 Proyecto_Sprint_3.pdf
