@@ -15,9 +15,9 @@ import java.util.List;
 
 public class XmlExporter {
 
-    public boolean exportar(List<Event> eventos, String rutaXml) {
+    public boolean exportar(List<Event> events, String rutaXml) {
 
-        if (eventos == null || eventos.isEmpty()) {
+        if (events == null || events.isEmpty()) {
             System.err.println("XmlExporter: la lista de eventos esta vacia.");
             return false;
         }
@@ -30,15 +30,15 @@ public class XmlExporter {
             Element raiz = doc.createElement("events");
             doc.appendChild(raiz);
 
-            for (Event evento : eventos) {
-                Element nodoEvento = doc.createElement("event");
+            for (Event event : events) {
+                Element eventNode = doc.createElement("event");
 
-                nodoEvento.appendChild(crearElemento(doc, "id",            evento.getId()));
-                nodoEvento.appendChild(crearElemento(doc, "countryCode",   evento.getCountryCode()));
-                nodoEvento.appendChild(crearElemento(doc, "city",          evento.getCity()));
-                nodoEvento.appendChild(crearElemento(doc, "startDateTime", evento.getStartDateTime()));
+                eventNode.appendChild(createElement(doc, "id",            event.getId()));
+                eventNode.appendChild(createElement(doc, "countryCode",   event.getCountryCode()));
+                eventNode.appendChild(createElement(doc, "city",          event.getCity()));
+                eventNode.appendChild(createElement(doc, "startDateTime", event.getStartDateTime()));
 
-                raiz.appendChild(nodoEvento);
+                raiz.appendChild(eventNode);
             }
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -53,7 +53,7 @@ public class XmlExporter {
             StreamResult result = new StreamResult(new File(rutaXml));
             transformer.transform(source, result);
 
-            System.out.println("XmlExporter: " + eventos.size()
+            System.out.println("XmlExporter: " + events.size()
                     + " eventos exportados a " + rutaXml);
             return true;
 
@@ -63,9 +63,9 @@ public class XmlExporter {
         }
     }
 
-    private Element crearElemento(Document doc, String nombre, String valor) {
-        Element elemento = doc.createElement(nombre);
-        elemento.setTextContent(valor != null ? valor : "");
-        return elemento;
+    private Element createElement(Document doc, String nombre, String valor) {
+        Element element = doc.createElement(nombre);
+        element.setTextContent(valor != null ? valor : "");
+        return element;
     }
 }

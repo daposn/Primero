@@ -5,77 +5,91 @@ import java.util.List;
 
 public class EventFilter {
 
-    private static final List<String> PAISES_VALIDOS = List.of("ES", "IT", "FR");
+    private static final List<String> VALID_COUNTRIES = List.of("ES", "IT", "FR");
 
-    public List<Event> filtrarCompletos(List<Event> eventos) {
-        List<Event> resultado = new ArrayList<>();
+    public List<Event> filterFullEvents(List<Event> event) {
+        List<Event> result = new ArrayList<>();
 
-        for (Event e : eventos) {
+        for (Event e : event) {
             if (e.isCompleto()) {
-                resultado.add(e);
+                result.add(e);
+            } else {
+                System.out.println("EventFilter: incomplete event discarded -> " + e);
             }
         }
 
-        return resultado;
+        System.out.println("EventFilter.filtrarCompletos: "
+                + result.size() + "/" + event.size() + " valid events.");
+        return result;
     }
 
-    public List<Event> filtrarPorPais(List<Event> eventos, String countryCode) {
-        List<Event> resultado = new ArrayList<>();
+    public List<Event> filterByCountry(List<Event> events, String countryCode) {
+        List<Event> result = new ArrayList<>();
 
-        for (Event e : eventos) {
+        for (Event e : events) {
             if (countryCode.equalsIgnoreCase(e.getCountryCode())) {
-                resultado.add(e);
+                result.add(e);
             }
         }
 
-        return resultado;
+        System.out.println("EventFilter.filterByCountry [" + countryCode + "]: "
+                + result.size() + " events.");
+        return result;
     }
 
-    public List<Event> filtrarPorCiudad(List<Event> eventos, String city) {
-        List<Event> resultado = new ArrayList<>();
+    public List<Event> filtrarPorCiudad(List<Event> events, String city) {
+        List<Event> result = new ArrayList<>();
 
-        for (Event e : eventos) {
+        for (Event e : events) {
             if (city.equalsIgnoreCase(e.getCity())) {
-                resultado.add(e);
+                result.add(e);
             }
         }
 
-        return resultado;
+        System.out.println("EventFilter.filtrarPorCiudad [" + city + "]: "
+                + result.size() + " eventos.");
+        return result;
     }
 
-    public List<Event> filtrarPorFecha(List<Event> eventos, String fechaMinima) {
-        List<Event> resultado = new ArrayList<>();
+    public List<Event> filterByDate(List<Event> events, String startDate) {
+        List<Event> result = new ArrayList<>();
 
-        for (Event e : eventos) {
+        for (Event e : events) {
             if (e.getStartDateTime() != null
-                    && e.getStartDateTime().compareTo(fechaMinima) >= 0) {
-                resultado.add(e);
+                    && e.getStartDateTime().compareTo(startDate) >= 0) {
+                result.add(e);
             }
         }
 
-        return resultado;
+        System.out.println("EventFilter.filterByDate [>= " + startDate + "]: "
+                + result.size() + " events.");
+        return result;
     }
 
-    public List<Event> filtrarPaisesValidos(List<Event> eventos) {
-        List<Event> resultado = new ArrayList<>();
+    public List<Event> filterValidCountries(List<Event> events) {
+        List<Event> results = new ArrayList<>();
 
-        for (Event e : eventos) {
-            if (PAISES_VALIDOS.contains(e.getCountryCode())) {
-                resultado.add(e);
+        for (Event e : events) {
+            if (VALID_COUNTRIES.contains(e.getCountryCode())) {
+                results.add(e);
+            } else {
+                System.out.println("EventFilter: country not allowed -> " + e.getCountryCode());
             }
         }
-
-        return resultado;
+        System.out.println("EventFilter.filterValidCountries: "
+                + results.size() + "/" + events.size() + " events.");
+        return results;
     }
 
-    public List<Event> filtrarTodo(List<Event> eventos, String fechaMinima) {
-        List<Event> resultado = filtrarCompletos(eventos);
-        resultado = filtrarPaisesValidos(resultado);
+    public List<Event> filterAllVars(List<Event> events, String startDate) {
+        List<Event> result = filterFullEvents(events);
+        result = filterValidCountries(result);
 
-        if (fechaMinima != null && !fechaMinima.isEmpty()) {
-            resultado = filtrarPorFecha(resultado, fechaMinima);
+        if (startDate != null && !startDate.isEmpty()) {
+            result = filterByDate(result, startDate);
         }
 
-        return resultado;
+        System.out.println("\nEventFilter.filterAllVars -> " + result.size() + " final events.");
+        return result;
     }
 }
