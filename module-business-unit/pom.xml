@@ -33,10 +33,17 @@
             <artifactId>activemq-client</artifactId>
             <version>5.15.12</version>
         </dependency>
+
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.11.0</version>
+        </dependency>
+        <!-- Silences the SLF4J "no binding" warning from activemq-client's transitive slf4j-api:1.7.25 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.25</version>
         </dependency>
     </dependencies>
 </project>
