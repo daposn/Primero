@@ -1,7 +1,9 @@
 package com.ulpgc.businessunit;
 
 import com.ulpgc.events.Event;
+import com.ulpgc.events.EventFeeder;
 import com.ulpgc.flights.Flight;
+import com.ulpgc.eventstorebuilder.EventStoreBuilder;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,7 +13,11 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        // 1. Carga eventos históricos del eventstore
+        // 1. Persistencia: los store builders escuchan ActiveMQ y guardan los mensajes en disco
+        EventStoreBuilder builderFlights = new EventStoreBuilder("Flight");
+        EventStoreBuilder builderEvents = new EventStoreBuilder("Event");
+
+        // 2. Carga eventos históricos del eventstore
         HistoricalEventReader<Flight> flightHistory =
                 new HistoricalEventReader<>(Flight.class, datamart::update);
         HistoricalEventReader<Event> eventHistory =
@@ -19,13 +25,16 @@ public class Main {
         flightHistory.load();
         eventHistory.load();
 
-        // 2. Suscripción a ActiveMQ para recibir datos en tiempo real
+        // 3. Suscripción a ActiveMQ para recibir datos en tiempo real
         BusinessUnitSubscriber<Flight> flightSub =
                 new BusinessUnitSubscriber<>(Flight.class, datamart::update);
         BusinessUnitSubscriber<Event> eventSub =
                 new BusinessUnitSubscriber<>(Event.class, datamart::update);
 
-        // 3. Arranca la CLI en el hilo principal
+        // 4. Arranca el feeder de TicketMaster (captura horaria → publica en ActiveMQ)
+        new EventFeeder().start();
+
+        // 5. Arranca la CLI en el hilo principal
         startCLI();
     }
 
@@ -62,8 +71,8 @@ public class Main {
 
         System.out.print("Date (YYYY-MM-DD): ");
         String date = scanner.nextLine().trim();
-
-        List<Flight> flights = datamart.fetchFlights(from, to, date);
+        
+        List<Flight> flights = new FlightSearchService(datamart).search(from, to, date);
 
         if (flights.isEmpty()) {
             System.out.println("\nNo flights found for "

@@ -10,6 +10,6 @@ public class Main {
         FlightSerializer serializer = new FlightPublisher();
         FlightController controller = new FlightController(feeder, serializer);
 
-        controller.run("CDG", "AUS", tomorrow);
+        controller.run("LPA", "MXP", tomorrow);
     }
 }
