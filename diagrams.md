@@ -1,8 +1,5 @@
 # Diagrams
 
-> These are Mermaid diagrams. GitHub renders them automatically inside Markdown —
-> just keep the ```` ```mermaid ```` fences. Paste either block into your README.
-
 ## System Architecture (Publisher / Subscriber)
 
 ```mermaid
