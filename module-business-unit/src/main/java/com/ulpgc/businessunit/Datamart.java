@@ -27,6 +27,15 @@ public class Datamart {
         return eventMap.getOrDefault(city.toLowerCase(), Collections.emptyList());
     }
 
+    public Optional<Flight> findFlightByFirstCode(String code) {
+        if (code == null) return Optional.empty();
+        return flightMap.values().stream()
+                .flatMap(List::stream)
+                .filter(flight -> flight.code != null && !flight.code.isEmpty()
+                        && flight.code.getFirst().equalsIgnoreCase(code))
+                .findFirst();
+    }
+
     // ── Updates (llamados por HistoricalEventReader y BusinessUnitSubscriber) ──
 
     public void update(Flight flight) {

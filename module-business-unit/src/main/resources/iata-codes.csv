@@ -1,0 +1,129 @@
+# IATA airport-code lookup for the Datamart's "flights to the event's city" feature.
+#
+# Format (one city per line):   city;CODE1,CODE2,...
+#   - city : lowercase, no surrounding spaces. Match by normalising the event's
+#            city the same way (lowercase + trim) before lookup.
+#   - codes: comma-separated IATA codes, ordered nearest/most-relevant first.
+#            Multiple codes = the city has several airports OR uses a nearby one.
+#
+# Lines starting with '#' and blank lines are ignored.
+# Coverage targets the feeders' countries: Spain (ES), Italy (IT), France (FR).
+# Localized name variants (locale=*) are included as separate keys where they
+# differ from English (e.g. roma/rome, firenze/florence).
+
+# ─────────────────────────────────────────── Spain (ES)
+madrid;MAD
+barcelona;BCN
+valencia;VLC
+sevilla;SVQ
+seville;SVQ
+malaga;AGP
+málaga;AGP
+bilbao;BIO
+palma de mallorca;PMI
+palma;PMI
+mallorca;PMI
+alicante;ALC
+las palmas;LPA
+las palmas de gran canaria;LPA
+tenerife;TFN,TFS
+santa cruz de tenerife;TFN,TFS
+granada;GRX
+santiago de compostela;SCQ
+santiago;SCQ
+zaragoza;ZAZ
+murcia;RMU
+ibiza;IBZ
+a coruña;LCG
+la coruña;LCG
+vigo;VGO
+san sebastian;EAS,BIO
+san sebastián;EAS,BIO
+donostia;EAS,BIO
+santander;SDR
+oviedo;OVD
+gijon;OVD
+gijón;OVD
+almeria;LEI
+almería;LEI
+pamplona;PNA
+valladolid;VLL
+jerez;XRY
+jerez de la frontera;XRY
+cordoba;SVQ
+córdoba;SVQ
+salamanca;VLL
+toledo;MAD
+segovia;MAD
+
+# ─────────────────────────────────────────── Italy (IT)
+roma;FCO,CIA
+rome;FCO,CIA
+milano;MXP,LIN,BGY
+milan;MXP,LIN,BGY
+napoli;NAP
+naples;NAP
+venezia;VCE
+venice;VCE
+firenze;FLR,PSA
+florence;FLR,PSA
+torino;TRN
+turin;TRN
+bologna;BLQ
+bari;BRI
+catania;CTA
+palermo;PMO
+pisa;PSA
+verona;VRN
+genova;GOA
+genoa;GOA
+cagliari;CAG
+bergamo;BGY,MXP
+brindisi;BDS
+lamezia terme;SUF
+trieste;TRS
+rimini;RMI
+pescara;PSR
+ancona;AOI
+perugia;PEG
+olbia;OLB
+alghero;AHO
+lecce;BDS
+siena;FLR,PSA
+padova;VCE
+padua;VCE
+
+# ─────────────────────────────────────────── France (FR)
+paris;CDG,ORY,BVA
+nice;NCE
+lyon;LYS
+marseille;MRS
+marsella;MRS
+toulouse;TLS
+bordeaux;BOD
+nantes;NTE
+lille;LIL
+strasbourg;SXB
+montpellier;MPL
+rennes;RNS
+nancy;ETZ
+metz;ETZ
+biarritz;BIQ
+brest;BES
+ajaccio;AJA
+bastia;BIA
+clermont-ferrand;CFE
+pau;PUF
+perpignan;PGF
+limoges;LIG
+tours;TUF
+grenoble;GNB,LYS
+cannes;NCE
+avignon;AVN,MRS
+versailles;ORY,CDG
+saint-etienne;LYS
+saint-étienne;LYS
+dijon;LYS
+reims;CDG
+le havre;CDG
+toulon;TLN

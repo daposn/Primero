@@ -43,6 +43,5 @@ public class EventFeeder {
         publisher.saveAll(filtrados);
         publisher.closeAll();
 
-        //System.out.println("Event feeder: " + filtrados.size() + " eventos publicados.");
     }
 }
