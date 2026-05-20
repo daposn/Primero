@@ -29,7 +29,6 @@ public class EventStore {
 
         try {
             Path dir = Path.of(directory);
-            System.out.println(dir.toAbsolutePath());
             Files.createDirectories(dir);
 
             Path file = dir.resolve(formattedDate + ".events");

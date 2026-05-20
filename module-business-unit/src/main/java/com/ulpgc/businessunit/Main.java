@@ -5,6 +5,7 @@ import com.ulpgc.events.EventFeeder;
 import com.ulpgc.flights.Flight;
 import com.ulpgc.eventstorebuilder.EventStoreBuilder;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Scanner;
 
@@ -63,10 +64,10 @@ public class Main {
 
     // ── Opción 1: buscar vuelos ───────────────────────────────────────────────
     private static void searchFlights(Scanner scanner) {
-        System.out.print("From (IATA code, e.g. CDG): ");
+        System.out.print("From (IATA code, e.g. MAD): ");
         String from = scanner.nextLine().trim().toUpperCase();
 
-        System.out.print("To   (IATA code, e.g. AUS): ");
+        System.out.print("To   (IATA code, e.g. LPA): ");
         String to = scanner.nextLine().trim().toUpperCase();
 
         System.out.print("Date (YYYY-MM-DD): ");
@@ -82,12 +83,12 @@ public class Main {
             System.out.println("─────────────────────────────────────────");
             for (Flight f : flights) {
                 System.out.printf(
-                        "  %-20s  %s → %s  |  %.2f EUR  |  %.0f min  |  %d stop(s)%n",
+                        "  %-20s  %s → %s  |  %.2f EUR  |  %s  |  %d stop(s)%n",
                         String.join("/", f.code),
                         f.from,
                         f.to,
                         f.price,
-                        f.duration,
+                        formatDuration(f.duration),
                         f.stops
                 );
             }
@@ -120,13 +121,17 @@ public class Main {
     }
 
     // ── Helpers de UI ─────────────────────────────────────────────────────────
+
+    // Convierte la duración (en minutos) a un formato legible "Xh Ym".
+    private static String formatDuration(double minutes) {
+        Duration d = Duration.ofMinutes(Math.round(minutes));
+        return String.format("%2dh %02dm", d.toHours(), d.toMinutesPart());
+    }
+
     private static void printWelcome() {
         System.out.println("╔══════════════════════════════════════╗");
         System.out.println("║       Travel Business Unit CLI       ║");
         System.out.println("╚══════════════════════════════════════╝");
-        System.out.println("Datamart loading from historical events...");
-        System.out.println("Subscribing to live feed via ActiveMQ...");
-        System.out.println("Ready.\n");
     }
 
     private static void printMenu() {

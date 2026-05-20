@@ -33,14 +33,12 @@ public class Datamart {
         if (flight == null) return;
         String key = flightKey(flight.from, flight.to, flight.arrival_date);
         flightMap.computeIfAbsent(key, k -> new ArrayList<>()).add(flight);
-        System.out.println("Datamart: flight added [" + key + "]");
     }
 
     public void update(Event event) {
         if (event == null) return;
         String city = event.getCity() != null ? event.getCity().toLowerCase() : "unknown";
         eventMap.computeIfAbsent(city, k -> new ArrayList<>()).add(event);
-        System.out.println("Datamart: event added [" + city + "] " + event.getId());
     }
 
     // ── Utilidades ────────────────────────────────────────────────────────────

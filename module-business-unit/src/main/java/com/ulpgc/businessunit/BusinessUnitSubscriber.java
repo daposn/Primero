@@ -27,7 +27,6 @@ public class BusinessUnitSubscriber<T> {
             connection.setClientID("module-business-unit-" + type.getSimpleName());
             connection.start();
             this.session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            System.out.println("Connection to MQ succesful -> " + type.getSimpleName());
 
         } catch (JMSException e) {
             System.err.println("Connection to ActiveMQ Failed");
