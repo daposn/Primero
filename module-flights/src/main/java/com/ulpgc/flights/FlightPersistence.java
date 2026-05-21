@@ -25,7 +25,7 @@ public class FlightPersistence implements FlightSerializer {
                 "price REAL, " +
                 "hasLayovers BOOLEAN, " +
                 "stops INTEGER, " +
-                "duration REAL" +
+                "duration REAL," +
                 "ts TEXT);";
         try(Connection c = DriverManager.getConnection(URL);
             PreparedStatement ps = c.prepareStatement(query);){

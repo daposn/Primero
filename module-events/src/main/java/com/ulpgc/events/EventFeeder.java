@@ -39,7 +39,7 @@ public class EventFeeder {
             todosLosEventos.addAll(parser.parse(json));
         }
 
-        List<Event> filtrados = filter.filtrarCompletos(todosLosEventos);
+        List<Event> filtrados = filter.filterFullEvents(todosLosEventos);
         publisher.saveAll(filtrados);
         publisher.closeAll();
 

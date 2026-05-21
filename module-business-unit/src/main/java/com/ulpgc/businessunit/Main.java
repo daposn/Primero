@@ -87,7 +87,7 @@ public class Main {
 
         if (flight.isEmpty()) {
             System.out.println("\nNo flight found with code " + code + ".");
-            return;
+            startCLI();
         }
 
         System.out.printf("Congratulations! You're going to %s in %s the %s. Your flight will be:%n",
@@ -128,6 +128,7 @@ public class Main {
         if (flights.isEmpty()) {
             System.out.println("\nNo flights found for "
                     + from + " → " + to + " on " + date + ".");
+            startCLI();
         } else {
             System.out.println("\nFlights found: " + flights.size());
             System.out.println("─────────────────────────────────────────");
@@ -165,6 +166,7 @@ public class Main {
 
         if (events.isEmpty()) {
             System.out.println("\nNo events found in " + city + ".");
+            startCLI();
         } else {
             System.out.println("\nEvents in " + city + ": " + events.size());
             System.out.println("─────────────────────────────────────────");

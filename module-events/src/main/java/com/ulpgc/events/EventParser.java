@@ -50,6 +50,7 @@ public class EventParser {
     private Event parsearEvent(JSONObject jsonEvent) {
 
         String id = jsonEvent.optString("id", null);
+        String name = jsonEvent.optString("name", null);
 
         String startDateTime = null;
         if (jsonEvent.has("dates")) {

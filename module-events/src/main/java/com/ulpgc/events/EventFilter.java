@@ -13,13 +13,9 @@ public class EventFilter {
         for (Event e : event) {
             if (e.isCompleto()) {
                 result.add(e);
-            } else {
-                System.out.println("EventFilter: incomplete event discarded -> " + e);
             }
         }
 
-        System.out.println("EventFilter.filtrarCompletos: "
-                + result.size() + "/" + event.size() + " valid events.");
         return result;
     }
 
@@ -32,8 +28,6 @@ public class EventFilter {
             }
         }
 
-        System.out.println("EventFilter.filterByCountry [" + countryCode + "]: "
-                + result.size() + " events.");
         return result;
     }
 
@@ -46,8 +40,6 @@ public class EventFilter {
             }
         }
 
-        System.out.println("EventFilter.filtrarPorCiudad [" + city + "]: "
-                + result.size() + " eventos.");
         return result;
     }
 
@@ -61,8 +53,6 @@ public class EventFilter {
             }
         }
 
-        System.out.println("EventFilter.filterByDate [>= " + startDate + "]: "
-                + result.size() + " events.");
         return result;
     }
 
@@ -72,12 +62,9 @@ public class EventFilter {
         for (Event e : events) {
             if (VALID_COUNTRIES.contains(e.getCountryCode())) {
                 results.add(e);
-            } else {
-                System.out.println("EventFilter: country not allowed -> " + e.getCountryCode());
             }
         }
-        System.out.println("EventFilter.filterValidCountries: "
-                + results.size() + "/" + events.size() + " events.");
+
         return results;
     }
 
@@ -89,7 +76,6 @@ public class EventFilter {
             result = filterByDate(result, startDate);
         }
 
-        System.out.println("\nEventFilter.filterAllVars -> " + result.size() + " final events.");
         return result;
     }
 }

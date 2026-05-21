@@ -174,4 +174,3 @@ El `Datamart` vive en memoria: si reinicias `module-business-unit`, recarga auto
 Los ficheros `.events` son *append-only*: cada ejecución añade líneas nuevas sin borrar las anteriores, preservando el historial temporal completo.
 
 Los suscriptores de ActiveMQ son **duraderos**: si `event-store-builder` o `business-unit` están caídos mientras un feeder publica, recibirán los mensajes pendientes al reconectarse.
-

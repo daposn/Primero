@@ -53,9 +53,7 @@ public class FlightClient implements FlightFeeder {
             String body = response.body().string();
             JsonObject results = JsonParser.parseString(body).getAsJsonObject();
             JsonArray best = results.getAsJsonArray("best_flights");
-            if (best == null) {
-                System.err.println("SerpAPI response has no 'best_flights'. Response: " + body);
-            }
+
             return best;
         } catch (IOException e) {
             System.err.println("Error calling SerpAPI: " + e.getMessage());
